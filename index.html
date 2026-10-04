@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>応用情報 暗記カード</title>
+  <meta name="description" content="応用情報技術者試験のための Anki 風・間隔反復暗記カード">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="AP暗記">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/"><img src="icons/icon.svg" alt="" width="28" height="28"><span>応用情報 暗記カード</span></a>
+    <nav class="nav">
+      <a href="#/" data-nav=""><span class="ni">🏠</span><span>ホーム</span></a>
+      <a href="#/add" data-nav="add"><span class="ni">＋</span><span>追加</span></a>
+      <a href="#/browse" data-nav="browse"><span class="ni">📋</span><span>一覧</span></a>
+      <a href="#/stats" data-nav="stats"><span class="ni">📊</span><span>記録</span></a>
+      <a href="#/settings" data-nav="settings"><span class="ni">⚙</span><span>設定</span></a>
+    </nav>
+  </header>
+  <main id="app"></main>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/util.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/srs.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
