@@ -36,6 +36,32 @@ const Store = (() => {
     return list.length;
   }
 
+  /**
+   * 組み込みの一問一答問題集（QUESTION_BANK）を追加する。
+   * 科目がなければ作成し、カード ID を問題文から決めることで登録済みの問題は追加しない。
+   */
+  async function addQuestionBank() {
+    await createTemplateDecks();
+    const deckByName = new Map((await decks()).map(d => [d.name, d]));
+    const existing = new Set((await DB.getAll('cards')).map(c => c.id));
+    const list = [];
+    let t = Date.now();
+    for (const [name, questions] of Object.entries(QUESTION_BANK)) {
+      const deck = deckByName.get(name);
+      if (!deck) continue;
+      for (const [front, back, note = ''] of questions) {
+        const id = 'qb-' + hashString(name + '\n' + front);
+        if (existing.has(id)) continue;
+        existing.add(id);
+        const card = newCard(deck.id);
+        Object.assign(card, { id, front, back, note, tags: ['一問一答'], createdAt: t, updatedAt: t++ });
+        list.push(card);
+      }
+    }
+    await DB.putMany('cards', list);
+    return list.length;
+  }
+
   async function deleteDeck(deck) {
     const cards = await DB.getByIndex('cards', 'deckId', deck.id);
     await DB.deleteCards(cards);
@@ -108,7 +134,7 @@ const Store = (() => {
   }
 
   return {
-    CATEGORIES, decks, createDeck, createTemplateDecks, deleteDeck, newCard,
+    CATEGORIES, decks, createDeck, createTemplateDecks, addQuestionBank, deleteDeck, newCard,
     newStudiedToday, deckCounts, logReview, exportAll, importAll,
   };
 })();

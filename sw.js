@@ -1,6 +1,6 @@
 // オフラインでも使えるようにアプリ本体をキャッシュする（データ自体は IndexedDB）
 // アプリを更新したら VERSION を上げる
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `ap-study-cards-${VERSION}`;
 const FILES = [
   './',
@@ -9,6 +9,7 @@ const FILES = [
   'js/util.js',
   'js/db.js',
   'js/srs.js',
+  'js/questions.js',
   'js/store.js',
   'js/components.js',
   'js/views.js',

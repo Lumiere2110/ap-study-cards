@@ -27,6 +27,16 @@ function onKeys(handler) {
   return () => document.removeEventListener('keydown', fn);
 }
 
+/** 組み込みの一問一答問題集を追加するボタン（未登録の問題だけを追加） */
+function questionBankButton(cls) {
+  const total = Object.values(QUESTION_BANK).reduce((n, qs) => n + qs.length, 0);
+  return h('button', { class: cls, onClick: async () => {
+    const n = await Store.addQuestionBank();
+    toast(n ? `一問一答の問題を ${n} 問追加しました` : '一問一答の問題はすべて追加済みです');
+    App.render();
+  } }, `一問一答の問題集を追加（全${total}問）`);
+}
+
 // ---- ホーム ------------------------------------------------------------------
 
 Views.home = async root => {
@@ -44,6 +54,7 @@ Views.home = async root => {
           toast(`${n} 個の科目を作成しました`);
           App.render();
         } }, '応用情報の科目セットを作成'),
+        questionBankButton('btn'),
         h('button', { class: 'btn', onClick: async () => { if (await deckDialog()) App.render(); } }, '自分で科目を追加')));
     return;
   }
@@ -86,7 +97,8 @@ Views.home = async root => {
       const n = await Store.createTemplateDecks();
       toast(n ? `${n} 個の科目を追加しました` : '科目セットはすべて作成済みです');
       App.render();
-    } }, '応用情報の科目セットを追加')));
+    } }, '応用情報の科目セットを追加'),
+    questionBankButton('btn')));
 
   function stat(value, label) {
     return h('div', { class: 'stat' }, h('div', { class: 'stat-value' }, value), h('div', { class: 'stat-label' }, label));

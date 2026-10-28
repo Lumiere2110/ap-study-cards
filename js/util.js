@@ -39,6 +39,16 @@ function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
 }
 
+/** 文字列から決まる短いハッシュ（FNV-1a, 32bit の 16進） */
+function hashString(str) {
+  let x = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    x ^= str.charCodeAt(i);
+    x = Math.imul(x, 0x01000193);
+  }
+  return (x >>> 0).toString(16).padStart(8, '0');
+}
+
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
